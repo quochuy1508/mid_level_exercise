@@ -1,0 +1,101 @@
+<div class="page-main-actions">
+    <div class="page-actions-placeholder"></div>
+    <div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
+        <div class="page-actions-inner" data-title="Orders">
+            <div class="page-actions-buttons">
+                <button id="open-modal" type="button" class="action- scalable primary" data-bind="click: openModal">
+                    <span>Copy Week Assignment</span>
+                </button>
+                <button id="add" type="button" class="action- scalable primary" data-bind="click: save">
+                    <span>Save</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="popup-modal" style="display:none;">
+    <input type="text" name="field" class="input-text" data-bind="value: numberOfWeekCopyToAssignment" style="width: 100%;" data-role="numberWeek" data-validate='{"required":true}' >
+</div>
+
+<div class="button-week">
+    <button id="previous-week" data-bind="click: getDataByPreviousWeek">< Previous Week</button>
+    <button id="next-week" data-bind="click: getDataByNextWeek">Next Week ></button>
+</div>
+<table class="table-scroll small-first-col">
+    <thead>
+    <tr data-bind="foreach: headers">
+        <th data-bind="text: name"></th>
+    </tr>
+    </thead>
+    <tbody id="body-table" class="body-half-screen" data-bind="afterRender: renderedHandler">
+    <!-- ko foreach: slot -->
+    <tr>
+        <td data-bind="text: time"></td>
+        <!-- ko if: $data.Monday -->
+        <td>
+            <p><strong data-bind="text: Monday.reservation"></strong> reservation</p>
+            <p><strong data-bind="text: Monday.used"></strong> used</p>
+            <p>
+                <input style="width: 40px" type="text" class="input-text" data-bind="value: Monday.stock, event: {change: $parent.onSlotChange($data.Monday)};"> stock
+            </p>
+        </td>
+        <!-- /ko -->
+        <!-- ko if: $data.Tuesday-->
+        <td>
+            <p><strong data-bind="text: Tuesday.reservation"></strong> reservation</p>
+            <p><strong data-bind="text: Tuesday.used"></strong> used</p>
+            <p>
+                <input style="width: 40px" type="text" class="input-text" data-bind="value: Tuesday.stock, event: {change: $parent.onSlotChange($data.Tuesday)};"> stock
+            </p>
+        </td>
+        <!-- /ko -->
+        <!-- ko if: $data.Wednesday -->
+        <td>
+            <p><strong data-bind="text: Wednesday.reservation"></strong> reservation</p>
+            <p><strong data-bind="text: Wednesday.used"></strong> used</p>
+            <p>
+                <input style="width: 40px" type="text" class="input-text" data-bind="value: Wednesday.stock, event: {change: $parent.onSlotChange($data.Wednesday)};"> stock
+            </p>
+        </td>
+        <!-- /ko -->
+        <!-- ko if: $data.Thursday -->
+        <td>
+            <p><strong data-bind="text: Thursday.reservation"></strong> reservation</p>
+            <p><strong data-bind="text: Thursday.used"></strong> used</p>
+            <p>
+                <input style="width: 40px" type="text" class="input-text" data-bind="value: Thursday.stock, event: {change: $parent.onSlotChange($data.Thursday)};"> stock
+            </p>
+        </td>
+        <!-- /ko -->
+        <!-- ko if: $data.Friday -->
+        <td>
+            <p><strong data-bind="text: Friday.reservation"></strong> reservation</p>
+            <p><strong data-bind="text: Friday.used"></strong> used</p>
+            <p>
+                <input style="width: 40px" type="text" class="input-text" data-bind="value: Friday.stock, event: {change: $parent.onSlotChange($data.Friday)};"> stock
+            </p>
+        </td>
+        <!-- /ko -->
+        <!-- ko if: $data.Saturday -->
+        <td>
+            <p><strong data-bind="text: Saturday.reservation"></strong> reservation</p>
+            <p><strong data-bind="text: Saturday.used"></strong> used</p>
+            <p>
+                <input style="width: 40px" type="text" class="input-text" data-bind="value: Saturday.stock, event: {change: $parent.onSlotChange($data.Saturday)};"> stock
+            </p>
+        </td>
+        <!-- /ko -->
+        <!-- ko if: $data.Sunday -->
+        <td>
+            <p><strong data-bind="text: Sunday.reservation"></strong> reservation</p>
+            <p><strong data-bind="text: Sunday.used"></strong> used</p>
+            <p>
+                <input style="width: 40px" type="text" class="input-text" data-bind="value: Sunday.stock, event: {change: $parent.onSlotChange($data.Sunday)};"> stock
+            </p>
+        </td>
+        <!-- /ko -->
+    </tr>
+    <!-- /ko -->
+    </tbody>
+</table>

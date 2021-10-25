@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="booking_schedule_time" resource="default" engine="innodb" comment="Booking Schedule Time">
+        <column xsi:type="int" name="entity_id" unsigned="false" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="varchar" name="time" nullable="false" length="255" comment="Slot Time Of Booking Schedule"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+
+    <table name="booking_schedule_day" resource="default" engine="innodb" comment="Booking Schedule Day">
+        <column xsi:type="int" name="entity_id" unsigned="false" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="timestamp" name="day" on_update="false" nullable="false" comment="Day Of Booking Schedule"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+
+    <table name="booking_schedule_slot" resource="default" engine="innodb" comment="Booking Schedule Slot Info">
+        <column xsi:type="int" name="entity_id" unsigned="false" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="int" name="day_id" unsigned="false" nullable="false" comment="Day Id Of Booking Schedule"/>
+        <column xsi:type="int" name="time_id" unsigned="false" nullable="false" comment="Time Id Of Booking Schedule"/>
+        <column xsi:type="int" name="stock" unsigned="false" nullable="false" identity="false" default="0" comment="Stock value of Booking Schedule"/>
+        <column xsi:type="int" name="reservation" unsigned="false" nullable="false" identity="false" default="0" comment="Stock Reservation of Booking Schedule"/>
+        <column xsi:type="int" name="used" unsigned="false" nullable="false" identity="false" default="0" comment="Stock Used of Booking Schedule"/>
+
+        <constraint xsi:type="foreign" referenceId="BOOKING_SCHEDULE_SLOT_DAY_ID_BOOKING_SCHEDULE_DAY_ENTITY_ID" table="booking_schedule_slot"
+                    column="day_id" referenceTable="booking_schedule_day" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="BOOKING_SCHEDULE_SLOT_TIME_ID_BOOKING_SCHEDULE_TIME_ENTITY_ID" table="booking_schedule_slot"
+                    column="time_id" referenceTable="booking_schedule_time" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+</schema>

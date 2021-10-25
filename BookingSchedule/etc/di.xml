@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magenest\BookingSchedule\Api\Data\BookingScheduleDayInterface" type="Magenest\BookingSchedule\Model\BookingScheduleDay" />
+    <preference for="Magenest\BookingSchedule\Api\Data\BookingScheduleSlotInterface" type="Magenest\BookingSchedule\Model\BookingScheduleSlot" />
+    <preference for="Magenest\BookingSchedule\Api\Data\BookingScheduleTimeInterface" type="Magenest\BookingSchedule\Model\BookingScheduleTime" />
+    <preference for="Magenest\BookingSchedule\Api\GetBookingScheduleDataInterface" type="Magenest\BookingSchedule\Model\GetBookingScheduleData" />
+    <preference for="Magenest\BookingSchedule\Api\GetBookingScheduleTimeInterface" type="Magenest\BookingSchedule\Model\GetBookingScheduleTime" />
+    <preference for="Magenest\BookingSchedule\Api\DuplicateBookingScheduleInterface" type="Magenest\BookingSchedule\Model\DuplicateBookingSchedule" />
+</config>

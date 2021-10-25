@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Magenest_BookingSchedule::menu" title="Booking Schedule Menu" module="Magenest_BookingSchedule" sortOrder="10" resource="Magenest_BookingSchedule::menu"/>
+        <add id="Magenest_BookingSchedule::view" title="Booking Schedule Form" module="Magenest_BookingSchedule" sortOrder="30" parent="Magenest_BookingSchedule::menu" action="booking_schedule/view/index" resource="Magenest_BookingSchedule::view"/>
+    </menu>
+</config>

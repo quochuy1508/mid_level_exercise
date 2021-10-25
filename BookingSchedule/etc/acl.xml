@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magenest_BookingSchedule::menu" title="Booking Schedule Menu" sortOrder="10" >
+                    <resource id="Magenest_BookingSchedule::view" title="View" sortOrder="200" />
+                </resource>
+                <resource id="Magenest_BookingSchedule::save" title="Save Schedule" sortOrder="50" />
+                <resource id="Magenest_BookingSchedule::copy" title="Copy Schedule" sortOrder="150" />
+            </resource>
+        </resources>
+    </acl>
+</config>

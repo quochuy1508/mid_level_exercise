@@ -1,0 +1,25 @@
+<?php
+/** @var $block BookingSchedule */
+
+use Magenest\BookingSchedule\Block\Adminhtml\BookingSchedule;
+
+?>
+
+<div id="booking-schedule" class="container" data-bind="scope:'bookingSchedule'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#booking-schedule": {
+                "Magento_Ui/js/core/app": {
+                   "components": {
+                        "bookingSchedule": {
+                            "component": "Magenest_BookingSchedule/js/view/booking_schedule",
+                            "bookingScheduleHeader": <?= /* @escapeNotVerified */ $block->getBookingScheduleHeaderString() ?>,
+                            "bookingScheduleData": <?= /* @escapeNotVerified */ $block->getBookingScheduleSlotString() ?>
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</div>
