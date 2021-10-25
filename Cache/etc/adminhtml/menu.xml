@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Magenest_Cache::customer_directory"
+             title="Customer Directory"
+             module="Magenest_Cache"
+             parent="Magento_Customer::customer"
+             sortOrder="1000"
+             resource="Magenest_Cache::customer_directory"
+             action="customer_directory/index/index" />
+    </menu>
+</config>
