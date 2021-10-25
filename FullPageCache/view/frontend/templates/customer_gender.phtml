@@ -1,0 +1,10 @@
+<?php
+/**
+ * @var Magenest\FullPageCache\Block\CustomerGender $block
+ */
+
+$target_id = $block->getTargetId();
+?>
+<?php if ($block->getCustomerGender()): ?>
+    <p id="<?= $block->escapeHtmlAttr($target_id) ?>" tabindex="-1">You are <?= $block->getCustomerGender() ?></p>
+<?php endif; ?>
