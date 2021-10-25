@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="CustomConfigModelConfigReader" type="Magento\Framework\Config\Reader\Filesystem">
+        <arguments>
+            <argument name="converter" xsi:type="object">Magenest\Configuration\Model\Config\Converter</argument>
+            <argument name="schemaLocator" xsi:type="object">Magenest\Configuration\Model\Config\SchemaLocator</argument>
+            <argument name="fileName" xsi:type="string">myconfig.xml</argument>
+
+            <!-- this is important to specify so merging can properly happen -->
+            <argument name="idAttributes" xsi:type="array">
+                <item name="/config/resources/resource" xsi:type="string">id</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="CustomConfigModelConfigData" type="\Magento\Framework\Config\Data">
+        <arguments>
+            <argument name="cacheId" xsi:type="string">customer_role_cache</argument>
+            <argument name="reader" xsi:type="object">CustomConfigModelConfigReader</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magenest\Configuration\Model\Config">
+        <arguments>
+            <argument name="configData" xsi:type="object">CustomConfigModelConfigData</argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,34 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var $block \Magenest\Configuration\Block\Configuration
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+?>
+
+<fieldset class="admin__fieldset form-inline entry-edit">
+    <label class="label"><span><?= $block->escapeHtml(__('Resources')) ?></span></label>
+    <div class="field" data-role="tree-resources-container">
+        <div class="control">
+            <div id="resource-tree" class="tree x-tree" data-role="resource-tree"></div>
+        </div>
+    </div>
+</fieldset>
+
+<?php
+    $treeJson = /* @noEscape */ $block->getTree();
+    $selectedJson = /* @noEscape */ $block->getTree();
+    $scriptString = <<<script
+        require(["jquery", "Magenest_Configuration/js/roles-tree"], function($){
+            $('[data-role="resource-tree"]').rolesTree({
+                'treeInitData': {$treeJson},
+                'treeInitSelectedData': {$selectedJson}
+            });
+        });
+    script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>

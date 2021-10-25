@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="myconfig.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Frontend::customer">
+                <resource id="Magento_Catalog::catalog" title="Catalog" translate="title" sortOrder="30">
+                    <resource id="Magento_Catalog::catalog_inventory" title="Inventory" translate="title" sortOrder="10">
+                        <resource id="Magento_Catalog::products" title="Products" translate="title" sortOrder="10">
+                            <resource id="Magento_Catalog::update_attributes" title="Update Attributes" translate="title" sortOrder="10" />
+                            <resource id="Magento_Catalog::edit_product_design" title="Edit Product Design" translate="title" sortOrder="20" visible="false"/>
+                        </resource>
+                        <resource id="Magento_Catalog::categories" title="Categories" translate="title" sortOrder="20">
+                            <resource id="Magento_Catalog::edit_category_design" title="Edit Category Design" translate="title" />
+                        </resource>
+                    </resource>
+                </resource>
+                <resource id="Magento_Frontend::stores" title="Store" translate="title" sortOrder="40">
+                    <resource id="Magento_Frontend::stores_attributes" title="Stores Attributes" translate="title" sortOrder="10" >
+                        <resource id="Magento_Catalog::attributes_attributes" title="Product" translate="title" sortOrder="30" />
+                        <resource id="Magento_Catalog::sets" title="Attribute Set" translate="title" sortOrder="40"/>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>
