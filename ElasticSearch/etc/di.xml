@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--    Method 1: Using Wild card query when search => Slow-->
+    <type
+        name="Magento\Elasticsearch\SearchAdapter\Query\Builder\Match">
+        <plugin name="add_wildcard_query" type="Magenest\ElasticSearch\Plugin\AddWildcardQuery"/>
+    </type>
+
+    <!--    Method 1: Reindex catalog product fulltext to token ngram=> Faster-->
+    <type name="Magento\Elasticsearch\Model\Adapter\Index\Builder">
+        <plugin name="custom_like_search_builder" type="Magenest\ElasticSearch\Plugin\CustomBuilder" />
+    </type>
+</config>
