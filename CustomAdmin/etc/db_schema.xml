@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="magenest_event" resource="default" engine="innodb" comment="Magenest Event Table">
+        <column xsi:type="int" name="event_id" unsigned="false" nullable="false" identity="true"
+                comment="EVENT ID"/>
+        <column xsi:type="varchar" name="event_name" nullable="false" length="255" comment="Event Name"/>
+        <column xsi:type="int" name="days_before_event" unsigned="false" nullable="false" default="7" comment="Day Before Event"/>
+        <column xsi:type="date" name="event_date" comment="Event Creation Time"/>
+        <column xsi:type="smallint" name="sort_order" unsigned="false" nullable="false" identity="false"
+                default="0" comment="Event Sort Order"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="event_id"/>
+        </constraint>
+    </table>
+    <table name="magenest_schedule" resource="default" engine="innodb" comment="Magenest Schedule Table">
+        <column xsi:type="int" name="schedule_id" unsigned="false" nullable="false" identity="true"
+                comment="SCHEDULE ID"/>
+        <column xsi:type="int" name="day_schedule" unsigned="false" nullable="false" default="0" comment="Day Of Week"/>
+        <column xsi:type="date" name="date_schedule" comment="Date Schedule"/>
+        <column xsi:type="mediumtext" name="details_message" nullable="true" comment="Schedule Message"/>
+        <column xsi:type="timestamp" name="event_time" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Event Time"/>
+        <column xsi:type="int" name="event_id" unsigned="false" nullable="false" comment="Event ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="schedule_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MAGENEST_SCHEDULE_EVENT_ID_MAGENEST_EVENT_EVENT_ID" table="magenest_schedule"
+                    column="event_id" referenceTable="magenest_event" referenceColumn="event_id" onDelete="CASCADE"/>
+    </table>
+</schema>
