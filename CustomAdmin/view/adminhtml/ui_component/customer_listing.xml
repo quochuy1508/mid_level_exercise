@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<!--    <listingToolbar name="listing_top">-->
+        <massaction name="listing_massaction" component="Magento_Ui/js/grid/tree-massactions">
+<!--            <action name="register_event" class="Magento\Sales\Ui\Component\Control\PdfAction">-->
+<!--                <argument name="data" xsi:type="array">-->
+<!--                    <item name="config" xsi:type="array">-->
+<!--                        <item name="registerAction" xsi:type="string">sales/shipment/pdfshipments</item>-->
+<!--                    </item>-->
+<!--                </argument>-->
+<!--                <settings>-->
+<!--                    <type>register_event</type>-->
+<!--                    <label translate="true">Register Event</label>-->
+<!--                </settings>-->
+<!--            </action>-->
+<!--        </massaction>-->
+<!--    </listingToolbar>-->
+</listing>
