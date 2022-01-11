@@ -51,6 +51,7 @@ class Tabs extends WidgetTabs
          * @var $eventCollection Collection
          */
         $eventCollection = $this->eventCollection->create();
+        $eventCollection->setOrder('sort_order', 'ASC');
 
         foreach ($eventCollection->getItems() as $event) {
             $this->addTab(

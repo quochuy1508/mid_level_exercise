@@ -52,8 +52,8 @@ class Info extends Generic implements TabInterface
             $form->setHtmlIdPrefix('events_' . $model->getId() . '_');
             $form->setFieldNameSuffix('events_' . $model->getId());
         } else {
-            $form->setHtmlIdPrefix('news_');
-            $form->setFieldNameSuffix('news');
+            $form->setHtmlIdPrefix('events_');
+            $form->setFieldNameSuffix('events');
         }
 
 

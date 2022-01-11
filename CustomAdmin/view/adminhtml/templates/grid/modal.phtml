@@ -1,0 +1,75 @@
+<?php
+/**
+ * @var $block \Magenest\CustomAdmin\Block\Adminhtml\Customer\Modal
+ */
+$eventsData = $block->getAllEventData();
+?>
+<div id="custom-popup-modal" style="display: none">
+    <form id="event_form">
+        <div>
+            <label for="event">Choose Event Name:</label><br/>
+            <select name="event" id="event">
+                <option value="0">----Select Event----</option>
+                <?php foreach ($eventsData as $key => $datum): ?>
+                    <option value="<?= $key ?>"><?= $datum['name'] ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div id="wrapper_time" style="display: none">
+            <label for="time">Choose Event Time:</label><br/>
+            <select name="time" id="time">
+            </select>
+        </div>
+        <div>
+            <label for="note">Note:</label><br/>
+            <input type="text" id="note" name="note">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+    require([
+        'jquery',
+    ], function ($) {
+        'use strict';
+        window.scheduleTime = '<?= json_encode($eventsData) ?>';
+
+        $('#event').on('change', function() {
+            let eventId = parseInt(this.value);
+            if (eventId) {
+                $('#wrapper_time').show()
+                var timeField = $('#time');
+                timeField.empty().append('<option value="">---Select Time---</option>');
+                $.each(JSON.parse(window.scheduleTime)[eventId]['child'], function (index, value) {
+                    var option = document.createElement('option');
+                    option.value = value.schedule_id;
+                    option.text = value.event_time;
+                    timeField.append(option);
+                })
+            } else {
+                $('#wrapper_time').hide()
+            }
+        });
+
+        $("#event_form").submit(function(e) {
+
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+
+            var form = $(this);
+            var actionUrl = form.attr('action');
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo $this->getUrl('magenest/event/queue'); ?>",
+                showLoader: true,
+                data: form.serialize(), // serializes the form's elements.
+                success: function(data)
+                {
+                    alert(data); // show response from the php script.
+                }
+            });
+
+        });
+    });
+</script>

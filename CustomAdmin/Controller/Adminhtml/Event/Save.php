@@ -2,6 +2,7 @@
 
 namespace Magenest\CustomAdmin\Controller\Adminhtml\Event;
 
+use _PHPStan_76800bfb5\Nette\Neon\Exception;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
@@ -81,8 +82,8 @@ class Save extends \Magento\Backend\App\Action implements HttpPostActionInterfac
             foreach ($dataPost as $key => $event) {
                 if (strpos($key, 'events') !== false) {
                     $eventModel = $this->eventFactory->create();
-                    if ($eventId = $event['event_id']) {
-                        $this->eventResourceModel->load($eventModel, $eventId);
+                    if (isset($event['event_id'])) {
+                        $this->eventResourceModel->load($eventModel, $event['event_id']);
                     }
                     $eventModel->setData($event);
                     try {
@@ -104,7 +105,7 @@ class Save extends \Magento\Backend\App\Action implements HttpPostActionInterfac
                         $this->scheduleResourceModel->getConnection()->delete($tableSchedule, ['event_id=?' => $eventModel->getId()]);
                         $this->scheduleResourceModel->getConnection()->insertMultiple($tableSchedule, $dataSchedule);
                     } catch (\Exception $exception) {
-
+                        throw new Exception($exception->getMessage());
                     }
                 }
             }
