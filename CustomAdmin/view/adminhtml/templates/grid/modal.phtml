@@ -7,8 +7,8 @@ $eventsData = $block->getAllEventData();
 <div id="custom-popup-modal" style="display: none">
     <form id="event_form">
         <div>
-            <label for="event">Choose Event Name:</label><br/>
-            <select name="event" id="event">
+            <label for="event_id">Choose Event Name:</label><br/>
+            <select name="event_id" id="event_id">
                 <option value="0">----Select Event----</option>
                 <?php foreach ($eventsData as $key => $datum): ?>
                     <option value="<?= $key ?>"><?= $datum['name'] ?></option>
@@ -16,8 +16,8 @@ $eventsData = $block->getAllEventData();
             </select>
         </div>
         <div id="wrapper_time" style="display: none">
-            <label for="time">Choose Event Time:</label><br/>
-            <select name="time" id="time">
+            <label for="schedule_id">Choose Event Time:</label><br/>
+            <select name="schedule_id" id="schedule_id">
             </select>
         </div>
         <div>
@@ -35,11 +35,11 @@ $eventsData = $block->getAllEventData();
         'use strict';
         window.scheduleTime = '<?= json_encode($eventsData) ?>';
 
-        $('#event').on('change', function() {
+        $('#event_id').on('change', function() {
             let eventId = parseInt(this.value);
             if (eventId) {
                 $('#wrapper_time').show()
-                var timeField = $('#time');
+                var timeField = $('#schedule_id');
                 timeField.empty().append('<option value="">---Select Time---</option>');
                 $.each(JSON.parse(window.scheduleTime)[eventId]['child'], function (index, value) {
                     var option = document.createElement('option');
@@ -66,7 +66,7 @@ $eventsData = $block->getAllEventData();
                 data: form.serialize(), // serializes the form's elements.
                 success: function(data)
                 {
-                    alert(data); // show response from the php script.
+                    $('#custom-popup-modal').modal('closeModal')
                 }
             });
 

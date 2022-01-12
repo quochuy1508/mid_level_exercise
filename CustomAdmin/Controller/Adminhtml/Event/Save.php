@@ -64,7 +64,7 @@ class Save extends \Magento\Backend\App\Action implements HttpPostActionInterfac
         $this->scheduleFactory = $scheduleFactory;
         $this->eventResourceModel = $eventResourceModel;
         $this->scheduleResourceModel = $scheduleResourceModel;
-        parent::__construct($context, $coreRegistry);
+        parent::__construct($context);
     }
 
     /**
@@ -72,6 +72,7 @@ class Save extends \Magento\Backend\App\Action implements HttpPostActionInterfac
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @return \Magento\Framework\Controller\ResultInterface
+     * @throws Exception
      */
     public function execute()
     {

@@ -2,7 +2,8 @@
 
 namespace Magenest\CustomAdmin\Model\Queue;
 
-use Magento\Framework\Exception\LocalizedException;
+use Magenest\CustomAdmin\Api\Data\OperationInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class Consumer
@@ -10,51 +11,24 @@ use Magento\Framework\Exception\LocalizedException;
 class Consumer
 {
     /**
-     * @var \Magento\Framework\Serialize\Serializer\Json
+     * @var LoggerInterface
      */
-    protected $_json;
+    private $logger;
 
-    private $_queueFactory;
-
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
 
     /**
      * @param array $datas
      */
-    public function process($datas)
+    public function process(OperationInterface $operation)
     {
         try {
-            $this->execute($datas);
+            $this->logger->info($operation->getCustomerIds());
         } catch (\Exception $e) {
-            $errorCode = $e->getCode();
-            $message = __('Something went wrong while adding orders to queue');
-//        	$this->_notifier->addCritical(
-//            	$errorCode,
-//            	$message
-//        	);
-//        	$this->_logger->critical($errorCode .": ". $message);
-    	}
-	}
-
-	/**
- 	* @param $orderItems
- 	*
- 	* @throws LocalizedException
- 	*/
-	private function execute($orderItems)
-	{
-    	$orderCollectionArr = [];
-    	$queue = $this->_queueFactory->create();
-    	$orderItems = $this->_json->unserialize($orderItems);
-    	if(is_array($orderItems)){
-        	foreach ($orderItems as $type => $orderId) {
-            $orderCollectionArr[] = [
-                	'type' => 'order',
-                	'entity_id' => $orderId,
-                	'priority' => 1,
-            	];
-        	}
-        	//handle insertMulti orders into Salesforce queue
-        	$queue->add($orderCollectionArr);
+        	$this->logger->critical($e->getMessage());
     	}
 	}
 }
