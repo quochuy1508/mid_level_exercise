@@ -1,10 +1,8 @@
 <?php
 
-namespace Magenest\EavType\Model\ResourceModel;
+namespace Magenest\EavModel\Model\ResourceModel;
 
-use Magento\Eav\Model\Entity\AbstractEntity;
-
-class Merchant extends AbstractEntity
+class Merchant extends \Magento\Eav\Model\Entity\AbstractEntity
 {
     /**
      *
@@ -14,7 +12,7 @@ class Merchant extends AbstractEntity
     public function getEntityType()
     {
         if (empty($this->_type)) {
-            $this->setType('merchant');
+            $this->setType(\Magenest\EavModel\Model\Merchant::ENTITY);
         }
         return parent::getEntityType();
     }

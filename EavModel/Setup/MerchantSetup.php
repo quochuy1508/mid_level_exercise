@@ -1,6 +1,6 @@
 <?php
 
-namespace Magenest\EavType\Setup;
+namespace Magenest\EavModel\Setup;
 
 use Magento\Catalog\Block\Adminhtml\Product\Helper\Form\Category as CategoryFormHelper;
 use Magento\Catalog\Model\Product\Attribute\Backend\Category as CategoryBackendAttribute;
@@ -9,19 +9,14 @@ use Magento\Eav\Model\Entity\Attribute\Backend\Datetime;
 use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 use Magento\Eav\Setup\EavSetup;
 
-class MerchantSetup extends EavSetup
+class MerchantSetup extends  EavSetup
 {
-    /**
-     * Default entities and attributes
-     *
-     * @return array
-     */
-    public function getDefaultEntities()
-    {
-        return [
-            'merchant' => [
-                'entity_model' => \Magenest\EavType\Model\ResourceModel\Merchant::class,
-                'table' => 'merchant_entity',
+    public function getDefaultEntities() {
+        $bannerEntity = \Magenest\EavModel\Model\Merchant::ENTITY;
+        $entities = [
+            $bannerEntity => [
+                'entity_model' => \Magenest\EavModel\Model\ResourceModel\Merchant::class,
+                'table' => $bannerEntity . '_entity',
                 'attributes' => [
                     'category_ids' => [
                         'type' => 'static',
@@ -105,32 +100,9 @@ class MerchantSetup extends EavSetup
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
                         'group' => 'General',
                     ],
-                    'city' => [
-                        'type' => 'varchar',
-                        'label' => 'City',
-                        'input' => 'text',
-                        'sort_order' => 90,
-                        'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General',
-                    ],
-                    'district' => [
-                        'type' => 'varchar',
-                        'label' => 'District',
-                        'input' => 'text',
-                        'sort_order' => 100,
-                        'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General',
-                    ],
-                    'ward' => [
-                        'type' => 'varchar',
-                        'label' => 'Ward',
-                        'input' => 'text',
-                        'sort_order' => 110,
-                        'global' => ScopedAttributeInterface::SCOPE_STORE,
-                        'group' => 'General',
-                    ],
                 ]
-            ]
+            ],
         ];
+        return $entities;
     }
 }
