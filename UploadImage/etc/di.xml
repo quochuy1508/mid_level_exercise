@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Magenest\UploadImage\ReferenceImageUpload" type="Magenest\UploadImage\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">codextblog/tmp/feature</argument>
+            <argument name="basePath" xsi:type="string">codextblog/feature</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+            <argument name="allowedMimeTypes" xsi:type="array">
+                <item name="jpg" xsi:type="string">image/jpg</item>
+                <item name="jpeg" xsi:type="string">image/jpeg</item>
+                <item name="gif" xsi:type="string">image/gif</item>
+                <item name="png" xsi:type="string">image/png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magenest\UploadImage\Controller\Adminhtml\Feature\Image\Upload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Magenest\UploadImage\ReferenceImageUpload</argument>
+        </arguments>
+    </type>
+</config>
