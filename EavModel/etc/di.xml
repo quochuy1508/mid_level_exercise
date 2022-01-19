@@ -14,10 +14,10 @@
         </arguments>
     </type>
 
-    <virtualType name="Magenest\EavModel\Model\ResourceModel\EavMerchant\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">merchant_entity</argument>
-            <argument name="resourceModel" xsi:type="string">Magenest\EavModel\Model\ResourceModel\Merchant</argument>
-        </arguments>
-    </virtualType>
+<!--    <virtualType name="Magenest\EavModel\Model\ResourceModel\EavMerchant\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">-->
+<!--        <arguments>-->
+<!--            <argument name="mainTable" xsi:type="string">merchant_entity</argument>-->
+<!--            <argument name="resourceModel" xsi:type="string">Magenest\EavModel\Model\ResourceModel\Merchant</argument>-->
+<!--        </arguments>-->
+<!--    </virtualType>-->
 </config>

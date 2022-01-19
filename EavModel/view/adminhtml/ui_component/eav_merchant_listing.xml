@@ -32,7 +32,7 @@
             <updateUrl path="mui/index/render"/>
         </settings>
         <aclResource>Magento_Cms::block</aclResource>
-        <dataProvider class="Magento\Cms\Ui\Component\DataProvider" name="eav_merchant_listing_data_source">
+        <dataProvider class="Magenest\EavModel\Ui\DataProvider\Merchant\MerchantDataProvider" name="eav_merchant_listing_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>entity_id</primaryFieldName>
@@ -57,17 +57,6 @@
                     </filters>
                 </templates>
             </settings>
-            <filterSelect name="store_id" provider="${ $.parentName }">
-                <settings>
-                    <captionValue>0</captionValue>
-                    <options class="Magento\Cms\Ui\Component\Listing\Column\Cms\Options"/>
-                    <label translate="true">Store View</label>
-                    <dataScope>store_id</dataScope>
-                    <imports>
-                        <link name="visible">ns = ${ $.ns }, index = ${ $.index }:visible</link>
-                    </imports>
-                </settings>
-            </filterSelect>
         </filters>
         <massaction name="listing_massaction">
             <action name="delete">
@@ -95,27 +84,6 @@
         <paging name="listing_paging"/>
     </listingToolbar>
     <columns name="eav_merchant_columns">
-        <settings>
-            <editorConfig>
-                <param name="clientConfig" xsi:type="array">
-                    <item name="saveUrl" xsi:type="url" path="cms/block/inlineEdit"/>
-                    <item name="validateBeforeSave" xsi:type="boolean">false</item>
-                </param>
-                <param name="indexField" xsi:type="string">entity_id</param>
-                <param name="enabled" xsi:type="boolean">true</param>
-                <param name="selectProvider" xsi:type="string">eav_merchant_listing.eav_merchant_listing.eav_merchant_columns.ids</param>
-            </editorConfig>
-            <childDefaults>
-                <param name="fieldAction" xsi:type="array">
-                    <item name="provider" xsi:type="string">eav_merchant_listing.eav_merchant_listing.eav_merchant_columns_editor</item>
-                    <item name="target" xsi:type="string">startEdit</item>
-                    <item name="params" xsi:type="array">
-                        <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
-                        <item name="1" xsi:type="boolean">true</item>
-                    </item>
-                </param>
-            </childDefaults>
-        </settings>
         <selectionsColumn name="ids">
             <settings>
                 <indexField>entity_id</indexField>
@@ -128,22 +96,116 @@
                 <sorting>asc</sorting>
             </settings>
         </column>
-        <column name="store_id" class="Magento\Store\Ui\Component\Listing\Column\Store">
+        <column name="category_ids" class="Magenest\EavModel\Ui\Component\Listing\Columns\Categories" sortOrder="60">
             <settings>
-                <label translate="true">Store View</label>
+                <label translate="true">Categories</label>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
-                <sortable>false</sortable>
             </settings>
         </column>
-<!--        <column name="active_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date" sortOrder="170">-->
-<!--            <settings>-->
-<!--                <timezone>false</timezone>-->
-<!--                <dateFormat>MMM d, y</dateFormat>-->
-<!--                <skipTimeZoneConversion>true</skipTimeZoneConversion>-->
-<!--                <filter>dateRange</filter>-->
-<!--                <dataType>date</dataType>-->
-<!--                <label translate="true">Active Date</label>-->
-<!--            </settings>-->
-<!--        </column>-->
+        <column name="active_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date" sortOrder="170">
+            <settings>
+                <timezone>false</timezone>
+                <dateFormat>MMM d, y</dateFormat>
+                <skipTimeZoneConversion>true</skipTimeZoneConversion>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Active Date</label>
+            </settings>
+        </column>
+        <column name="latest_updated_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date" sortOrder="170">
+            <settings>
+                <timezone>false</timezone>
+                <dateFormat>MMM d, y</dateFormat>
+                <skipTimeZoneConversion>true</skipTimeZoneConversion>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Latest Updated Date</label>
+            </settings>
+        </column>
+        <column name="merchant_status" component="Magento_Ui/js/grid/columns/select" sortOrder="80">
+            <settings>
+                <options class="Magenest\EavModel\Model\Merchant\Form\MerchantStatus"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Merchant Status</label>
+            </settings>
+        </column>
+        <column name="kyc_level">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">KYC Level</label>
+            </settings>
+        </column>
+        <column name="merchant_type">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Merchant Type</label>
+            </settings>
+        </column>
+        <column name="partner">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Partner</label>
+            </settings>
+        </column>
+        <column name="mc_phone_no">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">MC's Phone No</label>
+            </settings>
+        </column>
+        <column name="dsa_phone_no">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">DSA's Phone No</label>
+            </settings>
+        </column>
+        <column name="city">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">City</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Magenest\EavModel\Ui\Component\Listing\Columns\MerchantActions">
+            <settings>
+                <indexField>entity_id</indexField>
+            </settings>
+        </actionsColumn>
     </columns>
 </listing>

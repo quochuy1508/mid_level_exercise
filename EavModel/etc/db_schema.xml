@@ -10,14 +10,10 @@
     <table name="merchant_entity" resource="default" engine="innodb" comment="Merchant Table">
         <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
                 comment="Entity ID"/>
-        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Store ID"/>
+        <column xsi:type="varchar" name="city" nullable="true" length="255" comment="City"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>
         </constraint>
-        <constraint xsi:type="foreign" referenceId="MERCHANT_ENTITY_STORE_ID_STORE_STORE_ID"
-                    table="merchant_entity" column="store_id" referenceTable="store"
-                    referenceColumn="store_id" onDelete="CASCADE"/>
     </table>
     <table name="merchant_entity_datetime" resource="default" engine="innodb"
            comment="Merchant Datetime Attribute Backend Table">
