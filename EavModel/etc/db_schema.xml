@@ -10,14 +10,10 @@
     <table name="merchant_entity" resource="default" engine="innodb" comment="Merchant Table">
         <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
                 comment="Entity ID"/>
-        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Store ID"/>
+        <column xsi:type="varchar" name="city" nullable="true" length="255" comment="City"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>
         </constraint>
-        <constraint xsi:type="foreign" referenceId="MERCHANT_ENTITY_STORE_ID_STORE_STORE_ID"
-                    table="merchant_entity" column="store_id" referenceTable="store"
-                    referenceColumn="store_id" onDelete="CASCADE"/>
     </table>
     <table name="merchant_entity_datetime" resource="default" engine="innodb"
            comment="Merchant Datetime Attribute Backend Table">
@@ -160,6 +156,65 @@
         </index>
         <index referenceId="MERCHANT_ENTITY_VARCHAR_ATTRIBUTE_ID" indexType="btree">
             <column name="attribute_id"/>
+        </index>
+    </table>
+    <table name="merchant_eav_attribute" resource="default" engine="innodb" comment="Merchant Eav Attribute">
+        <column xsi:type="smallint" name="attribute_id" unsigned="true" nullable="false" identity="false"
+                comment="Attribute ID"/>
+        <column xsi:type="smallint" name="is_visible" unsigned="true" nullable="false" identity="false"
+                default="1" comment="Is Visible"/>
+        <column xsi:type="varchar" name="input_filter" nullable="true" length="255" comment="Input Filter"/>
+        <column xsi:type="smallint" name="multiline_count" unsigned="true" nullable="false" identity="false"
+                default="1" comment="Multiline Count"/>
+        <column xsi:type="text" name="validate_rules" nullable="true" comment="Validate Rules"/>
+        <column xsi:type="smallint" name="is_system" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Is System"/>
+        <column xsi:type="int" name="sort_order" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Sort Order"/>
+        <column xsi:type="varchar" name="data_model" nullable="true" length="255" comment="Data Model"/>
+        <column xsi:type="smallint" name="is_used_in_grid" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Is Used in Grid"/>
+        <column xsi:type="smallint" name="is_visible_in_grid" unsigned="true" nullable="false"
+                identity="false" default="0" comment="Is Visible in Grid"/>
+        <column xsi:type="smallint" name="is_filterable_in_grid" unsigned="true" nullable="false"
+                identity="false" default="0" comment="Is Filterable in Grid"/>
+        <column xsi:type="smallint" name="is_searchable_in_grid" unsigned="true" nullable="false"
+                identity="false" default="0" comment="Is Searchable in Grid"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="attribute_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MERCHANT_EAV_ATTRIBUTE_ATTRIBUTE_ID_EAV_ATTRIBUTE_ATTRIBUTE_ID"
+                    table="merchant_eav_attribute" column="attribute_id" referenceTable="eav_attribute"
+                    referenceColumn="attribute_id" onDelete="CASCADE"/>
+        <index referenceId="CUSTOMER_EAV_ATTRIBUTE_SORT_ORDER" indexType="btree">
+            <column name="sort_order"/>
+        </index>
+    </table>
+    <table name="merchant_eav_attribute_website" resource="default" engine="innodb"
+           comment="Merchant Eav Attribute Website">
+        <column xsi:type="smallint" name="attribute_id" unsigned="true" nullable="false" identity="false"
+                comment="Attribute ID"/>
+        <column xsi:type="smallint" name="website_id" unsigned="true" nullable="false" identity="false"
+                comment="Website ID"/>
+        <column xsi:type="smallint" name="is_visible" unsigned="true" nullable="true" identity="false"
+                comment="Is Visible"/>
+        <column xsi:type="smallint" name="is_required" unsigned="true" nullable="true" identity="false"
+                comment="Is Required"/>
+        <column xsi:type="text" name="default_value" nullable="true" comment="Default Value"/>
+        <column xsi:type="smallint" name="multiline_count" unsigned="true" nullable="true" identity="false"
+                comment="Multiline Count"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="attribute_id"/>
+            <column name="website_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="MER_EAV_ATTR_WS_ATTR_ID_EAV_ATTR_ATTR_ID"
+                    table="merchant_eav_attribute_website" column="attribute_id" referenceTable="eav_attribute"
+                    referenceColumn="attribute_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="MER_EAV_ATTR_WS_WS_ID_STORE_WS_WS_ID"
+                    table="merchant_eav_attribute_website" column="website_id" referenceTable="store_website"
+                    referenceColumn="website_id" onDelete="CASCADE"/>
+        <index referenceId="CUSTOMER_EAV_ATTRIBUTE_WEBSITE_WEBSITE_ID" indexType="btree">
+            <column name="website_id"/>
         </index>
     </table>
 </schema>
