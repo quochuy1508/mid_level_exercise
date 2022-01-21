@@ -20,4 +20,16 @@
 <!--            <argument name="resourceModel" xsi:type="string">Magenest\EavModel\Model\ResourceModel\Merchant</argument>-->
 <!--        </arguments>-->
 <!--    </virtualType>-->
+
+    <virtualType name="additionalFieldsProviderForElasticsearch" type="Magento\AdvancedSearch\Model\Adapter\DataMapper\AdditionalFieldsProvider">
+        <arguments>
+            <argument name="fieldsProviders" xsi:type="array">
+                <item name="merchant_id" xsi:type="object">Magenest\EavModel\Model\Adapter\BatchDataMapper\MerchantDataProvider</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Elasticsearch\Model\Adapter\Index\Builder">
+        <plugin name="custom_like_search_builder" type="Magenest\EavModel\Plugin\Model\Adapter\Index\CustomBuilder" />
+    </type>
 </config>

@@ -236,5 +236,20 @@
                 <dataScope>city</dataScope>
             </settings>
         </field>
+        <field name="store_name" sortOrder="10" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">merchant</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Store Name</label>
+                <dataScope>store_name</dataScope>
+            </settings>
+        </field>
     </fieldset>
 </form>
