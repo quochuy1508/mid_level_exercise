@@ -10,44 +10,44 @@ define([
     'use strict';
 
     return function (SwatchRenderer) {
-        $.widget('mage.SwatchRendererRemandOption', {
-            options: {
-                delay: 200,                             //how much ms before tooltip to show
-                tooltipClass: 'swatch-option-tooltip'  //configurable, but remember about css
-            },
-
-            /**
-             * @private
-             */
-            _init: function () {
-                var $widget = this,
-                    $this = this.element,
-                    container = this.element;
-            }
-        });
-
-
         $.widget('mage.SwatchRenderer', SwatchRenderer, {
 
             /** @inheritdoc */
             _OnClick: function ($this, widget) {
                 this._super($this, widget);
 
-                let that = this;
                 const attributeList = this.options.jsonConfig.attributes;
                 var selectedOptions = '.' + widget.options.classes.attributeClass + '[data-option-selected]';
                 if (widget.element.find(selectedOptions).length === (attributeList.length - 1)) {
-                    let idOptions = attributeList.map(function(attribute) {return parseInt(attribute.id);});
                     let idOptionsSelected = [];
                     widget.element.find(selectedOptions).each(function () {
                         var id = $(this).data('attribute-id');
                         idOptionsSelected.push(parseInt(id));
                     });
-                    console.log(idOptions)
-                    console.log(idOptionsSelected)
-                    let difference = idOptions.filter(x => !idOptionsSelected.includes(x));
+
+                    let difference = attributeList.filter(x => !idOptionsSelected.includes(parseInt(x.id)));
                     if (difference.length === 1) {
-                        $(`div[data-attribute-id="${difference[0]}"]`).remove();
+                        const remained = difference[0];
+                        $(`div[data-attribute-id="${remained.id}"]`).remove();
+                        let swatchSelectedValue = [];
+                        widget.element.find('.swatch-attribute-selected-option').each(function () {
+                            swatchSelectedValue.push($(this).text());
+                        });
+                        $('.swatch-opt').append(
+                        `<div style="margin-top: 50px" class="swatch-attribute ${remained.code}" data-attribute-code="${remained.code}" data-attribute-id="${remained.id}">
+                            <div aria-activedescendant="option-label-${remained.code}-${remained.id}" tabIndex="0" aria-invalid="false" aria-required="true"
+                                 role="listbox" aria-labelledby="option-label-${remained.code}-${remained.id}"
+                                 class="swatch-attribute-options clearfix">
+                                 ${remained.options.map((option, index) => `<div style="width: 500px; height: 30px" class="swatch-option text" id="option-label-${remained.code}-${remained.id}-item-${option.id}" index="${index}"
+                                     aria-checked="false" aria-describedby="option-label-${remained.code}-${remained.id}" tabIndex="0"
+                                     data-option-type="0" data-option-id="${option.id}" data-option-label="${option.label}"
+                                     aria-label="${option.label}" role="option" data-thumb-width="250" data-thumb-height="100"
+                                     ><div>${remained.label + ':' + option.label} ----------- ${swatchSelectedValue.join(" - ")}</div>
+                                </div>`).join("")}
+                            </div>
+                            <input class="swatch-input super-attribute-select" name="super_attribute[${remained.id}]"
+                                   type="text" value="" data-selector="super_attribute[${remained.id}]"
+                                   data-validate="{required: true}" aria-required="true" aria-invalid="false"></div>`);
                     }
                 }
             }
