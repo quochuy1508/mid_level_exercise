@@ -13,4 +13,6 @@
     <type name="Magento\Catalog\Ui\DataProvider\Product\Form\NewCategoryDataProvider">
         <plugin name="use_as_main_breadcrumbs_new_category_data_provider" type="Magenest\CustomCatalog\Plugin\Catalog\Product\Category\DataProvider" />
     </type>
+
+    <preference for="Magento\Catalog\Ui\DataProvider\Product\ProductDataProvider" type="Magenest\CustomCatalog\Ui\DataProvider\Product\ProductDataProvider" />
 </config>
