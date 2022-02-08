@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Controller\Adminhtml\Category\Save">
+        <plugin name="add_use_as_main_breadcrumbs_categories" type="Magenest\CustomCatalog\Plugin\Controller\Adminhtml\Category\Save" />
+    </type>
+
+    <type name="Magento\Catalog\Ui\DataProvider\Product\Form\NewCategoryDataProvider">
+        <plugin name="use_as_main_breadcrumbs_new_category_data_provider" type="Magenest\CustomCatalog\Plugin\Catalog\Product\Category\DataProvider" />
+    </type>
+</config>

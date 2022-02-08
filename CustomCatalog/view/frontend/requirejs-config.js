@@ -8,6 +8,9 @@ var config = {
         mixins: {
             'Magento_Swatches/js/swatch-renderer': {
                 'Magenest_CustomCatalog/js/swatch-renderer': true
+            },
+            'Magento_Theme/js/view/breadcrumbs': {
+                'Magenest_CustomCatalog/js/product/breadcrumbs': true
             }
         }
     }
