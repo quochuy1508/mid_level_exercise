@@ -25,6 +25,7 @@
     <columns name="product_columns" class="Magento\Catalog\Ui\Component\Listing\Columns">
         <column name="category_id" class="Magenest\CustomCatalog\Ui\Component\Listing\Column\Category">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magenest\CustomCatalog\Model\Category\CategoryList</item>
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Categories</item>
                     <item name="sortOrder" xsi:type="number">35</item>
