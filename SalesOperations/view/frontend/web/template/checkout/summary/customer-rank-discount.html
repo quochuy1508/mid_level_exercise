@@ -1,0 +1,8 @@
+<!-- ko if: isDisplayedCustomerRankDiscountTotal() -->
+<tr class="totals coupon-discount excl">
+    <th class="mark" colspan="1" scope="row" data-bind="text: customer_rank_discount"></th>
+    <td class="amount">
+        <span class="price" data-bind="text: getCustomerRankDiscountTotal(), attr: {'data-th': customer_rank_discount}"></span>
+    </td>
+</tr>
+<!-- /ko -->

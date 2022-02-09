@@ -1,0 +1,14 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="promo">
+            <group id="customer_rank" translate="label" type="text" sortOrder="1000" showInDefault="1">
+                <label>Customer Rank</label>
+                <field id="accumulation" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Accumulation</label>
+                    <frontend_model>Magenest\SalesOperations\Block\Adminhtml\Form\Field\Accumulation</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
