@@ -5,5 +5,9 @@
         <referenceBlock name="order_totals">
             <block class="Magenest\SalesOperations\Block\Adminhtml\Order\Total\CustomerRankDiscount" name="customer.rank.discount.amount" after="-"/>
         </referenceBlock>
+
+        <referenceBlock name="order_info">
+            <block class="Magenest\SalesOperations\Block\Adminhtml\Order\ExtraInformation" name="sales_operation_extra" template="Magenest_SalesOperations::order_extra_information.phtml"/>
+        </referenceBlock>
     </body>
 </page>

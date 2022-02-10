@@ -1,0 +1,32 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="admin__scope-old">
+    <form id="om-confirm-form">
+        <div class="form-inline">
+            <div class="admin__field field required _required">
+                <label class="label admin__field-label" for="sale_agent"><span><%= _.i18n('Sale Agent') %></span></label>
+                <div class="admin__field-control control">
+                    <select name="sale_agent" id="sale_agent" class="input-select admin__control-select required-entry _required">
+                        <% _.each(saleAgent, function(option) { %>
+                            <option value="<%- option.value %>"><%- option.label %></option>
+                        <% }); %>
+                    </select>
+                </div>
+            </div>
+            <div class="admin__field field required _required">
+                <label class="label admin__field-label" for="order_source"><span><%= _.i18n('Order Source') %></span></label>
+                <div class="admin__field-control control">
+                    <select name="order_source" id="order_source" class="input-select admin__control-select required-entry _required">
+                        <% _.each(orderSource, function(option) { %>
+                        <option value="<%- option.value %>"><%- option.label %></option>
+                        <% }); %>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

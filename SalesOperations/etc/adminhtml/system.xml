@@ -1,11 +1,35 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="promo">
-            <group id="customer_rank" translate="label" type="text" sortOrder="1000" showInDefault="1">
+        <tab id="magenest" translate="label" sortOrder="300">
+            <label>Magenest</label>
+        </tab>
+        <section id="sales_operations" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Sales Operations</label>
+            <tab>magenest</tab>
+            <resource>Magento_Customer::config_customer</resource>
+            <group id="customer_rank" translate="label" type="text" sortOrder="0" showInDefault="1">
                 <label>Customer Rank</label>
                 <field id="accumulation" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Accumulation</label>
                     <frontend_model>Magenest\SalesOperations\Block\Adminhtml\Form\Field\Accumulation</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+            </group>
+            <group id="order_source" translate="label" type="text" sortOrder="10" showInDefault="1">
+                <label>Order Source</label>
+                <field id="source" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Source</label>
+                    <frontend_model>Magenest\SalesOperations\Block\Adminhtml\Form\Field\OrderSource</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+            </group>
+
+            <group id="order_cancel" translate="label" type="text" sortOrder="10" showInDefault="1">
+                <label>Order Cancel</label>
+                <field id="reason" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Reason</label>
+                    <frontend_model>Magenest\SalesOperations\Block\Adminhtml\Form\Field\OrderCancel</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                 </field>
             </group>

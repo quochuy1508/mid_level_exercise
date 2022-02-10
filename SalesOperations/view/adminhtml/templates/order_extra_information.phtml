@@ -1,0 +1,22 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magenest\SalesOperations\Block\Adminhtml\Order\ExtraInformation $block
+ */
+?>
+<?php if ($block->getSaleAgentInformation()) : ?>
+<tr>
+    <th><?= $block->escapeHtml(__('Sale Agent')) ?></th>
+    <td><span id="order_status"><?= $block->getSaleAgentInformation() ?></span></td>
+</tr>
+<?php endif; ?>
+<?php if ($block->getOrderSourceInformation()) : ?>
+<tr>
+    <th><?= $block->escapeHtml(__('Order Source')) ?></th>
+    <td><span id="order_status"><?= $block->getOrderSourceInformation() ?></span></td>
+</tr>
+<?php endif; ?>
