@@ -2,10 +2,12 @@
 
 namespace Magenest\SalesOperations\Observer;
 
+use Magenest\SalesOperations\Helper\Data;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Reports\Model\ResourceModel\Order\Collection;
+use Psr\Log\LoggerInterface;
 
 class UpgradeRankCustomer implements ObserverInterface
 {
@@ -13,16 +15,30 @@ class UpgradeRankCustomer implements ObserverInterface
     private $resourceConnection;
 
     /**
-     * @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory
+     * @var LoggerInterface
      */
-    private $collectionFactory;
+    private $logger;
+
+    /**
+     * @var Data
+     */
+    private $dataHelper;
+
+    /**
+     * @var \Magento\Customer\Api\CustomerRepositoryInterface
+     */
+    private $_customerRepositoryInterface;
 
     public function __construct(
         ResourceConnection $resourceConnection,
-        \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $collectionFactory
+        LoggerInterface $logger,
+        Data $dataHelper,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
     ) {
         $this->resourceConnection = $resourceConnection;
-        $this->collectionFactory = $collectionFactory;
+        $this->logger = $logger;
+        $this->dataHelper = $dataHelper;
+        $this->_customerRepositoryInterface = $customerRepositoryInterface;
     }
 
     /**
@@ -33,36 +49,55 @@ class UpgradeRankCustomer implements ObserverInterface
         $order = $observer->getEvent()->getOrder();
 
         if ($order && $order->getCustomerId()) {
-            $data = $this->addSumTotalsByCustomer(1);
+            $data = $this->addSumTotalsByCustomer($order->getCustomerId());
+            if ($data) {
+                $dataRanks = $this->dataHelper->getCustomerRankDataRaw();
+                arsort($dataRanks, SORT_NUMERIC);
+
+                foreach ($dataRanks as $key => $dataRank) {
+                    if ($dataRank['accumulation'] < $data) {
+                        $customer = $this->_customerRepositoryInterface->getById($order->getCustomerId());
+                        $customer->setCustomAttribute('customer_rank', $key);
+                        $this->_customerRepositoryInterface->save($customer);
+                        break;
+                    }
+                }
+            }
         }
     }
 
     /**
      * Add summary average totals
      *
+     * @param $customerId
      * @param int $storeId
-     * @return \Magento\Framework\DB\Select
+     * @return string|null
      */
     public function addSumTotalsByCustomer($customerId, $storeId = 0)
     {
-        $connection = $this->resourceConnection->getConnection();
-        /**
-         * calculate average and total amount
-         */
-        $expr = $this->getTotalsExpressionWithDiscountRefunded(
-            $storeId,
-            $connection->getIfNullSql('main_table.base_subtotal_refunded', 0),
-            $connection->getIfNullSql('main_table.base_subtotal_canceled', 0),
-            $connection->getIfNullSql('ABS(main_table.base_discount_refunded)', 0),
-            $connection->getIfNullSql('ABS(main_table.base_discount_canceled)', 0)
-        );
-        $salesOrderTable = $connection->getTableName('sales_order');
-        $connection->select()->from($salesOrderTable)->where('customer_id', ['eq' => $customerId])
-        $collection = $this->collectionFactory->create()->addFieldToSelect([])->addFieldToFilter('customer_id', ['eq' => $customerId])->getSelect()->columns(
-            ['orders_sum_amount' => "SUM({$expr})"]
-        );
+        try {
+            $connection = $this->resourceConnection->getConnection();
+            /**
+             * calculate average and total amount
+             */
+            $expr = $this->getTotalsExpressionWithDiscountRefunded(
+                $storeId,
+                $connection->getIfNullSql('main_table.base_subtotal_refunded', 0),
+                $connection->getIfNullSql('main_table.base_subtotal_canceled', 0),
+                $connection->getIfNullSql('ABS(main_table.base_discount_refunded)', 0),
+                $connection->getIfNullSql('ABS(main_table.base_discount_canceled)', 0)
+            );
+            $salesOrderTable = $connection->getTableName('sales_order');
+            $select = $connection->select()->from(['main_table' => $salesOrderTable], [])->columns(
+                ['orders_sum_amount' => "SUM({$expr})"]
+            )->where('main_table.customer_id = ?', $customerId);
 
-        return $collection;
+            return $connection->fetchOne($select);
+        } catch (\Exception $exception) {
+            $this->logger->error($exception->getMessage());
+        }
+
+        return null;
     }
 
     /**
