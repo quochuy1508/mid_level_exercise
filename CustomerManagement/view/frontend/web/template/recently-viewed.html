@@ -1,0 +1,9 @@
+<!-- ko if: productViewedArray -->
+<div data-bind="foreach: {data: productViewedArray, as: 'variation'}">
+    <li class="link recently-viewed">
+        <a data-bind="attr: {href: variation.url}">
+            <span data-bind="text: variation.name"></span>
+        </a>
+    </li>
+</div>
+<!--/ko-->

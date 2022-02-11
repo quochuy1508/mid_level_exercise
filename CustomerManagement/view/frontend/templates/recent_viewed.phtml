@@ -1,0 +1,24 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/* @var \Magenest\CustomerManagement\Block\Header\RecentViewed $block */
+?>
+<div data-bind="scope: 'recently_viewed'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "recently_viewed": {
+                        "component": "Magenest_CustomerManagement/js/view/recently-viewed"
+                    }
+                }
+            }
+        }
+    }
+</script>
