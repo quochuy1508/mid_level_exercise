@@ -4,12 +4,8 @@
     <type name="Magenest\SalesOperations\Model\Rule\Condition\OriginalPrice">
         <arguments>
             <argument name="data" xsi:type="array">
-                <item name="form_name" xsi:type="string">catalog_rule_form</item>
+                <item name="form_name" xsi:type="string">sales_rule_form</item>
             </argument>
         </arguments>
-    </type>
-
-    <type name="Magento\Rule\Model\Condition\AbstractCondition">
-        <plugin name="add_original_price_catalog_rule" type="Magenest\SalesOperations\Plugin\Rule\Condition\OriginalPriceRule" />
     </type>
 </config>

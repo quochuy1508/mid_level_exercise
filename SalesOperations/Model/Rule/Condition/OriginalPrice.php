@@ -3,42 +3,50 @@
 namespace Magenest\SalesOperations\Model\Rule\Condition;
 
 use Magento\Checkout\Model\Session;
-use Magento\Config\Model\Config\Source\Yesno;
-use Magento\Framework\Model\AbstractModel;
-use Magento\Rule\Model\Condition\AbstractCondition;
-use Magento\Rule\Model\Condition\Context;
 
-class OriginalPrice extends AbstractCondition
+/**
+ * Class Customer
+ */
+class OriginalPrice extends \Magento\Rule\Model\Condition\AbstractCondition
 {
     /**
-     * @var Session
-     */
-    protected $_checkoutSession;
-
-    /**
-     * @var Yesno
+     * @var \Magento\Config\Model\Config\Source\Yesno
      */
     protected $sourceYesNo;
 
     /**
-     * @param Context $context
-     * @param Session $checkoutSession
-     * @param Yesno $sourceYesNo
+     * @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory
+     */
+    protected $orderFactory;
+
+    /**
+     * @var Session
+     */
+    protected $_session;
+
+    /**
+     * Constructor
+     * @param \Magento\Rule\Model\Condition\Context $context
+     * @param \Magento\Config\Model\Config\Source\Yesno $sourceYesNo
+     * @param \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderFactory
      * @param array $data
      */
     public function __construct(
-        Context $context,
-        Session $checkoutSession,
-        Yesno $sourceYesNo,
-        array   $data = []
+        \Magento\Rule\Model\Condition\Context $context,
+        \Magento\Config\Model\Config\Source\Yesno $sourceYesNo,
+        \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderFactory,
+        Session $session,
+        array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->_checkoutSession = $checkoutSession;
         $this->sourceYesNo = $sourceYesNo;
+        $this->orderFactory = $orderFactory;
+        $this->_session = $session;
     }
 
     /**
-     * @return $this|OriginalPrice
+     * Load attribute options
+     * @return $this
      */
     public function loadAttributeOptions()
     {
@@ -49,6 +57,7 @@ class OriginalPrice extends AbstractCondition
     }
 
     /**
+     * Get input type
      * @return string
      */
     public function getInputType()
@@ -80,16 +89,26 @@ class OriginalPrice extends AbstractCondition
         return $this->getData('value_select_options');
     }
 
-
     /**
-     * @param AbstractModel $model
+     * Validate Customer First Order Rule Condition
+     * @param \Magento\Framework\Model\AbstractModel $model
      * @return bool
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function validate(AbstractModel $model)
+    public function validate(\Magento\Framework\Model\AbstractModel $model)
     {
-        $model->setData('original_price', true);  // validation value
+        $items = $this->_session->getQuote()->getAllItems();
+        $isOriginalPrice = 0;
+        foreach ($items as $item) {
+            /** @var \Magento\Quote\Model\Quote\Item $item */
+            $finalPrice = $item->getProduct()->getFinalPrice();
+            $originalPrice = $item->getProduct()->getPrice();
+
+            if ($finalPrice == $originalPrice) {
+                $isOriginalPrice = 1;
+            }
+        }
+
+        $model->setData('original_price', $isOriginalPrice);
         return parent::validate($model);
     }
 }
