@@ -1,0 +1,66 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+// @codingStandardsIgnoreFile
+
+/** @var \Magenest\CustomerManagement\Block\Cart\Grid $block */
+?>
+<?php $savedCarts = $block->getSavedCarts(); ?>
+<?= $block->getChildHtml('info') ?>
+<?php if ($savedCarts && count($savedCarts)) : ?>
+    <div class="table-wrapper orders-history">
+        <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption"><?= $block->escapeHtml(__('Orders')) ?></caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col id"><?= $block->escapeHtml(__('ID #')) ?></th>
+                <th scope="col" class="col quote_id"><?= $block->escapeHtml(__('Quote Id')) ?></th>
+                <th scope="col" class="col address"><?= $block->escapeHtml(__('Address')) ?></th>
+                <th scope="col" class="col items"><?= $block->escapeHtml(__('Items')) ?></th>
+                <th scope="col" class="col total_qty"><?= $block->escapeHtml(__('Total Qty')) ?></th>
+                <th scope="col" class="col coupon_code"><?= $block->escapeHtml(__('Coupon Code')) ?></th>
+                <th scope="col" class="col shipping_method"><?= $block->escapeHtml(__('Shipping Method')) ?></th>
+                <th scope="col" class="col payment_method"><?= $block->escapeHtml(__('Payment Method')) ?></th>
+                <th scope="col" class="col actions"><?= $block->escapeHtml(__('Action')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($savedCarts as $savedCart) : ?>
+                <tr>
+                    <?php $addressAndItemsData = $block->getInformationByQuoteId($savedCart->getQuoteId()) ?>
+                    <td data-th="<?= $block->escapeHtml(__('ID #')) ?>" class="col id"><?= $block->escapeHtml($savedCart->getEntityId()) ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Quote Id')) ?>" class="col total"><?= /* @noEscape */ $savedCart->getQuoteId() ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Address')) ?>" class="col total"><?= /* @noEscape */ $addressAndItemsData['address'] ?? null ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Items')) ?>" class="col total"><?= /* @noEscape */ $addressAndItemsData['items'] ?? null ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Total Qty')) ?>" class="col total"><?= /* @noEscape */ $addressAndItemsData['qty'] ?? null ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Coupon Code')) ?>" class="col total"><?= /* @noEscape */ $addressAndItemsData['coupon_code'] ?? null ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Shipping Method')) ?>" class="col total"><?= /* @noEscape */ $addressAndItemsData['shipping_method'] ?? null ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Payment Method')) ?>" class="col total"><?= /* @noEscape */ $addressAndItemsData['payment_method'] ?? null ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                        <a href="<?= $block->escapeUrl($block->getRestoreCartUrl($savedCart->getQuoteId())) ?>" class="action view">
+                            <span><?= $block->escapeHtml(__('Restore Cart')) ?></span>
+                        </a>
+                        <br/>
+                        <a href="<?= $block->escapeUrl($block->getViewUrl($savedCart)) ?>" class="action view">
+                            <span><?= $block->escapeHtml(__('Send Email')) ?></span>
+                        </a>
+                        <br/>
+                        <a href="<?= $block->escapeUrl($block->getDeleteUrl($savedCart->getEntityId())) ?>" class="action view">
+                            <span><?= $block->escapeHtml(__('Delete')) ?></span>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getPagerHtml()) : ?>
+        <div class="order-products-toolbar toolbar bottom"><?= $block->getPagerHtml() ?></div>
+    <?php endif ?>
+<?php else : ?>
+    <div class="message info empty"><span><?= $block->escapeHtml($block->getEmptyOrdersMessage()) ?></span></div>
+<?php endif ?>

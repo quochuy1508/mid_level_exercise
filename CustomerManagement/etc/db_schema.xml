@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="customer_saved_cart" resource="checkout" engine="innodb" comment="Sales Flat Quote Address">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="int" name="quote_id" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Quote ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="true" identity="false"
+                comment="Customer ID"/>
+        <column xsi:type="smallint" name="is_restore_saved_cart" unsigned="true" nullable="true" identity="false" default="0"
+                comment="Is Restore Saved Cart"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+
+        <constraint xsi:type="foreign" referenceId="CSTR_SAVED_CART_CSTR_ID_CSTR_ENTT_ENTT_ID"
+                    table="customer_saved_cart" column="customer_id" referenceTable="customer_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+
+        <constraint xsi:type="foreign" referenceId="CSTR_SAVED_CART_QUOTE_ID_QUOTE_ENTITY_ID" table="customer_saved_cart" column="quote_id"
+                    referenceTable="quote" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="CSTR_SAVED_CART_CUSTOMER_ID_QUOTE_QUOTE_ID">
+            <column name="customer_id"/>
+            <column name="quote_id"/>
+        </constraint>
+    </table>
+</schema>
