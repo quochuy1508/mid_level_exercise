@@ -123,6 +123,17 @@ class Grid extends Template
     }
 
     /**
+     * Get order view URL
+     *
+     * @param object $order
+     * @return string
+     */
+    public function getSendEmailUrl($entityId)
+    {
+        return $this->getUrl('customermanagement/cart/sendEmail', ['id' => $entityId]);
+    }
+
+    /**
      * Get reorder URL
      *
      * @param string $quoteId

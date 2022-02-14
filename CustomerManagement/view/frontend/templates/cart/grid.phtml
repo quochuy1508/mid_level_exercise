@@ -25,6 +25,7 @@
                 <th scope="col" class="col coupon_code"><?= $block->escapeHtml(__('Coupon Code')) ?></th>
                 <th scope="col" class="col shipping_method"><?= $block->escapeHtml(__('Shipping Method')) ?></th>
                 <th scope="col" class="col payment_method"><?= $block->escapeHtml(__('Payment Method')) ?></th>
+                <th scope="col" class="col payment_method"><?= $block->escapeHtml(__('Is Restore Saved Cart"')) ?></th>
                 <th scope="col" class="col actions"><?= $block->escapeHtml(__('Action')) ?></th>
             </tr>
             </thead>
@@ -37,15 +38,16 @@
                     <td data-th="<?= $block->escapeHtml(__('Address')) ?>" class="col total"><?= /* @noEscape */ $addressAndItemsData['address'] ?? null ?></td>
                     <td data-th="<?= $block->escapeHtml(__('Items')) ?>" class="col total"><?= /* @noEscape */ $addressAndItemsData['items'] ?? null ?></td>
                     <td data-th="<?= $block->escapeHtml(__('Total Qty')) ?>" class="col total"><?= /* @noEscape */ $addressAndItemsData['qty'] ?? null ?></td>
-                    <td data-th="<?= $block->escapeHtml(__('Coupon Code')) ?>" class="col total"><?= /* @noEscape */ $addressAndItemsData['coupon_code'] ?? null ?></td>
-                    <td data-th="<?= $block->escapeHtml(__('Shipping Method')) ?>" class="col total"><?= /* @noEscape */ $addressAndItemsData['shipping_method'] ?? null ?></td>
-                    <td data-th="<?= $block->escapeHtml(__('Payment Method')) ?>" class="col total"><?= /* @noEscape */ $addressAndItemsData['payment_method'] ?? null ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Coupon Code')) ?>" class="col coupon_code"><?= /* @noEscape */ $addressAndItemsData['coupon_code'] ?? null ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Shipping Method')) ?>" class="col shipping_method"><?= /* @noEscape */ $addressAndItemsData['shipping_method'] ?? null ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Payment Method')) ?>" class="col payment_method"><?= /* @noEscape */ $addressAndItemsData['payment_method'] ?? null ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Is Restore Saved Cart"')) ?>" class="col total"><?= /* @noEscape */ $savedCart->getIsRestoreSavedCart() ? "TRUE" : "FALSE" ?></td>
                     <td data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="col actions">
                         <a href="<?= $block->escapeUrl($block->getRestoreCartUrl($savedCart->getQuoteId())) ?>" class="action view">
                             <span><?= $block->escapeHtml(__('Restore Cart')) ?></span>
                         </a>
                         <br/>
-                        <a href="<?= $block->escapeUrl($block->getViewUrl($savedCart)) ?>" class="action view">
+                        <a href="<?= $block->escapeUrl($block->getSendEmailUrl($savedCart->getEntityId())) ?>" class="action view">
                             <span><?= $block->escapeHtml(__('Send Email')) ?></span>
                         </a>
                         <br/>
