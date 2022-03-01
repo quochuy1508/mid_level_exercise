@@ -3,6 +3,7 @@
     <head>
         <css src="Magenest_Popup::css/font-awesome.min.css"/>
         <css src="Magenest_Popup::css/animate.css"/>
+        <css src="Magenest_Popup::css/popup_css.css"/>
     </head>
     <body>
         <referenceContainer name="after.body.start">
